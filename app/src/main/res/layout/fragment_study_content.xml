@@ -5,10 +5,14 @@
     tools:context="com.project.sonnguyen.alden.fragment.StudyContentFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <ListView
+    <!--<ListView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/frag_study_content_listview"-->
+        <!--&gt;</ListView>-->
+    <ernestoyaquello.com.verticalstepperform.VerticalStepperFormLayout
+        android:id="@+id/vertical_stepper_form"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/frag_study_content_listview"
-        ></ListView>
-
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"/>
 </FrameLayout>

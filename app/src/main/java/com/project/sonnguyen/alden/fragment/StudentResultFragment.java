@@ -23,7 +23,7 @@ import ernestoyaquello.com.verticalstepperform.interfaces.VerticalStepperForm;
  * Use the {@link StudentResultFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class StudentResultFragment extends Fragment implements VerticalStepperForm {
+public class StudentResultFragment extends Fragment{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -75,15 +75,7 @@ public class StudentResultFragment extends Fragment implements VerticalStepperFo
         int colorPrimary = ContextCompat.getColor(getContext(), R.color.colorPrimary);
         int colorPrimaryDark = ContextCompat.getColor(getContext(), R.color.colorPrimaryDark);
 
-        // Finding the view
-        VerticalStepperFormLayout verticalStepperForm = (VerticalStepperFormLayout) v.findViewById(R.id.vertical_stepper_form);
 
-        // Setting up and initializing the form
-        VerticalStepperFormLayout.Builder.newInstance(verticalStepperForm, mySteps, this, getActivity())
-                .primaryColor(colorPrimary)
-                .primaryDarkColor(colorPrimaryDark)
-                .displayBottomNavigation(true) // It is true by default, so in this case this line is not necessary
-                .init();
         return v;
     }
 
@@ -105,25 +97,7 @@ public class StudentResultFragment extends Fragment implements VerticalStepperFo
         }
     }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-    @Override
-    public View createStepContentView(int stepNumber) {
-        return null;
-    }
 
-    @Override
-    public void onStepOpening(int stepNumber) {
-
-    }
-
-    @Override
-    public void sendData() {
-
-    }
 
     /**
      * This interface must be implemented by activities that contain this

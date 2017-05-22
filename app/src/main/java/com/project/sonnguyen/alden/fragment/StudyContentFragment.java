@@ -13,11 +13,18 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.project.sonnguyen.alden.R;
 
 import java.util.ArrayList;
+
+import ernestoyaquello.com.verticalstepperform.VerticalStepperFormLayout;
+import ernestoyaquello.com.verticalstepperform.interfaces.VerticalStepperForm;
+
+import static com.project.sonnguyen.alden.R.attr.colorPrimary;
+import static com.project.sonnguyen.alden.R.attr.colorPrimaryDark;
 
 
 /**
@@ -28,7 +35,7 @@ import java.util.ArrayList;
  * Use the {@link StudyContentFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class StudyContentFragment extends Fragment {
+public class StudyContentFragment extends Fragment implements VerticalStepperForm {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -39,6 +46,8 @@ public class StudyContentFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    private VerticalStepperFormLayout verticalStepperForm;
+    private ArrayList<String> weekList;
 
     public StudyContentFragment() {
         // Required empty public constructor
@@ -76,15 +85,12 @@ public class StudyContentFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_study_content, container, false);
-        ListView listView = (ListView) v.findViewById(R.id.frag_study_content_listview);
-        ArrayList<String> weekList = new ArrayList<>();
+        //ListView listView = (ListView) v.findViewById(R.id.frag_study_content_listview);
+         weekList = new ArrayList<>();
         ArrayList<String> ContentList = new ArrayList<>();
         weekList.add("Tuần 1(từ 1/6/2017 - 7/6/2017)");
-
         weekList.add("Tuần 2(từ 8/6/2017 - 14/6/2017)");
-
         weekList.add("Tuần 3(từ 15/6/2017 - 21/6/2017)");
-
         weekList.add("Tuần 4(từ 22/6/2017 - 28/6/2017)");
         weekList.add("Tuần 5(từ 29/6/2017 - 4/7/2017)");
         weekList.add("Tuần 6(từ 5/7/2017 - 11/7/2017)");
@@ -94,29 +100,20 @@ public class StudyContentFragment extends Fragment {
         weekList.add("Tuần 10(từ 3/8/2017 - 9/8/2017)");
         weekList.add("Tuần 11(từ 10/8/2017 - 16/8/2017)");
         weekList.add("Tuần 12(từ 17/8/2017 - 23/8/2017)");
-//        for(int i = 1;i<=12;i++){
-//            weekList.add("Tuần "+ i);
-//        }
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),android.R.layout.simple_list_item_1,weekList);
-        listView.setAdapter(adapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                AlertDialog.Builder builder1 = new AlertDialog.Builder(getContext());
-                builder1.setMessage("Làm quen với trẻ.");
-                builder1.setCancelable(true);
-                builder1.setPositiveButton(
-                        "OK",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                            }
-                        });
-
-                AlertDialog alert11 = builder1.create();
-                alert11.show();
-            }
-        });
+// Finding the view
+         verticalStepperForm = (VerticalStepperFormLayout) v.findViewById(R.id.vertical_stepper_form);
+        String[] mySteps = new String[weekList.size()];
+        int dem= 0;
+        for (String i : weekList)
+            mySteps[dem++] = i;
+        // Setting up and initializing the form
+        VerticalStepperFormLayout.Builder.newInstance(verticalStepperForm, mySteps, this, getActivity())
+                .primaryColor(colorPrimary)
+                .primaryDarkColor(colorPrimaryDark)
+                .displayBottomNavigation(false)
+                // It is true by default, so in this case this line is not necessary
+                .init();
 
         return v;
     }
@@ -145,6 +142,27 @@ public class StudyContentFragment extends Fragment {
         mListener = null;
     }
 
+    @Override
+    public View createStepContentView(int stepNumber) {
+        return createStep();
+    }
+    private View createStep() {
+        // Here we generate programmatically the view that will be added by the system to the step content layout
+        TextView Content = new TextView(getContext());
+        Content.setSingleLine(true);
+        Content.setText("Làm quen với trẻ.");
+        return Content;
+    }
+    @Override
+    public void onStepOpening(int stepNumber) {
+        for(int i = 0;i<weekList.size();i++)
+        verticalStepperForm.setStepAsCompleted(i);
+    }
+
+    @Override
+    public void sendData() {
+
+    }
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
