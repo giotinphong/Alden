@@ -4,24 +4,9 @@
     android:orientation="vertical"
     android:layout_height="wrap_content"
     tools:context="com.project.sonnguyen.alden.fragment.StudentResultFragment">
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="fitXY"
-                android:src="@drawable/sum_star"/>
 
-                <ImageView
-                    android:scaleType="fitXY"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/piechart"/>
+
+
 <TextView
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -948,7 +933,10 @@
                 </LinearLayout>
             </TableRow>
         </TableLayout>
-        </LinearLayout>
-    </ScrollView>
+    <ernestoyaquello.com.verticalstepperform.VerticalStepperFormLayout
+        android:id="@+id/vertical_stepper_form"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"/>
 
 </LinearLayout>

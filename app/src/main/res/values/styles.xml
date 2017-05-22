@@ -19,4 +19,10 @@
     </style>
 
     <color name="divider_color">#000000</color>
+    <color name="transparent">#00ffffff</color>
+
+    <style name="DialogCustomTheme" parent="android:Theme.Holo.Dialog.NoActionBar">
+        <item name="android:windowBackground">@color/transparent</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+    </style>
 </resources>

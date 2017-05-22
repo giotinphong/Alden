@@ -4,11 +4,15 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.project.sonnguyen.alden.R;
+
+import ernestoyaquello.com.verticalstepperform.VerticalStepperFormLayout;
+import ernestoyaquello.com.verticalstepperform.interfaces.VerticalStepperForm;
 
 
 /**
@@ -19,7 +23,7 @@ import com.project.sonnguyen.alden.R;
  * Use the {@link StudentResultFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class StudentResultFragment extends Fragment {
+public class StudentResultFragment extends Fragment implements VerticalStepperForm {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -66,7 +70,21 @@ public class StudentResultFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_student_result, container, false);
+        View v  =  inflater.inflate(R.layout.fragment_student_result, container, false);
+        String[] mySteps = {"Name", "Email", "Phone Number"};
+        int colorPrimary = ContextCompat.getColor(getContext(), R.color.colorPrimary);
+        int colorPrimaryDark = ContextCompat.getColor(getContext(), R.color.colorPrimaryDark);
+
+        // Finding the view
+        VerticalStepperFormLayout verticalStepperForm = (VerticalStepperFormLayout) v.findViewById(R.id.vertical_stepper_form);
+
+        // Setting up and initializing the form
+        VerticalStepperFormLayout.Builder.newInstance(verticalStepperForm, mySteps, this, getActivity())
+                .primaryColor(colorPrimary)
+                .primaryDarkColor(colorPrimaryDark)
+                .displayBottomNavigation(true) // It is true by default, so in this case this line is not necessary
+                .init();
+        return v;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -91,6 +109,20 @@ public class StudentResultFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+    @Override
+    public View createStepContentView(int stepNumber) {
+        return null;
+    }
+
+    @Override
+    public void onStepOpening(int stepNumber) {
+
+    }
+
+    @Override
+    public void sendData() {
+
     }
 
     /**

@@ -1,94 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-
-    android:orientation="vertical"
     android:background="@drawable/game_color_bg"
-    tools:context="com.project.sonnguyen.alden.RightOrRonActivity">
-
-
+    android:layout_height="match_parent">
     <LinearLayout
-        android:id="@+id/linearLayout3"
         android:layout_width="120dp"
         android:layout_height="50dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
         android:background="@drawable/score_png"
-        android:gravity="top|right">
+        android:id="@+id/linearLayout4">
         <TextView
-            android:id="@+id/acti_rightron_txt_score"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginTop="17dp"
-            android:text="@string/score"
+            android:text="asd"
+            android:id="@+id/acti_rightron_txt_score"
+            android:textSize="@dimen/text_lager_size"
+            android:layout_gravity="center|right"
+            android:textAlignment="textEnd"
+            tools:ignore="RtlCompat"
             android:textColor="@android:color/white"
-            android:textSize="20dp" />
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="15dp"/>
     </LinearLayout>
-
     <LinearLayout
-
-        android:orientation="vertical"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/panel_main_containt"
-        android:id="@+id/linearLayout"
-        android:gravity="center"
         android:layout_centerVertical="true"
-        android:layout_alignParentStart="true">
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="200dp"
-    android:layout_marginLeft="17dp"
-    android:layout_marginRight="17dp">
-    <LinearLayout
-        android:id="@+id/acti_rightron_linear_color"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:gravity="center">
-
-        <TextView
-            android:id="@+id/acti_rightron_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Text"
-            android:textSize="50dp"
-            android:textStyle="bold" />
-
-    </LinearLayout>
-
-</LinearLayout>
-
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/linearLayout3">
         <LinearLayout
+            android:id="@+id/acti_rightron_linear_color"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="bottom"
+            android:gravity="center"
+            android:elevation="5dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
             android:layout_marginTop="50dp"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:id="@+id/acti_rightron_btnRon"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:src="@drawable/btn_close" />
-
-            <ImageView
-                android:id="@+id/acti_rightron_btnRight"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:src="@drawable/btn_ok" />
-
-
+            android:layout_marginBottom="50dp"
+            android:layout_height="match_parent"
+            >
+            <TextView
+                android:id="@+id/acti_rightron_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="50dp"
+                android:text="TEXT"
+                android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
-
-
-
-
+    <ImageView
+        android:id="@+id/acti_rightron_btnRon"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/btn_close"
+        android:layout_alignBottom="@+id/linearLayout3"
+        android:layout_marginStart="50dp"
+        android:layout_alignStart="@+id/linearLayout3"
+        android:layout_marginBottom="-20dp"
+        />
+    <ImageView
+        android:id="@+id/acti_rightron_btnRight"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/btn_ok"
+        android:layout_alignBottom="@+id/linearLayout3"
+        android:layout_marginBottom="-20dp"
+        android:layout_alignEnd="@+id/linearLayout3"
+        android:layout_marginEnd="50dp"
+        />
 </RelativeLayout>

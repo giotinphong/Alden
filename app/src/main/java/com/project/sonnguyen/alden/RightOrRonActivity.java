@@ -1,6 +1,8 @@
 package com.project.sonnguyen.alden;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -32,7 +34,7 @@ public class RightOrRonActivity extends AppCompatActivity {
         //btnStop = (Button) findViewById(R.id.acti_rightron_btnStop);
         txtScore = (TextView) findViewById(R.id.acti_rightron_txt_score);
         txtText = (TextView) findViewById(R.id.acti_rightron_text);
-        Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/Skranji-Bold.ttf");
+        final Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/Skranji-Bold.ttf");
         txtText.setTypeface(typeface);
         txtScore.setTypeface(typeface);
         lnColorDisplay = (LinearLayout) findViewById(R.id.acti_rightron_linear_color);
@@ -41,34 +43,42 @@ public class RightOrRonActivity extends AppCompatActivity {
         final int[] score = {0};
         txtScore.setText("" + score[0]);
         //begin
-        final int[] size = {rightOrRonArrayList.size()};
         final boolean[] answer = {StarGame()};
         btnRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (answer[0]&& size[0] !=0){
+                if (answer[0]&& rightOrRonArrayList.size()!=0){
                     //dung
                     answer[0] = StarGame();
-                    size[0]--;
                     score[0]++;
                     txtScore.setText("" + score[0]);
                 }
 
                 else {
                     //ket thuc
-                    AlertDialog.Builder builder1 = new android.support.v7.app.AlertDialog.Builder(RightOrRonActivity.this);
-                    builder1.setMessage("Điểm số : " + score[0]);
-                    builder1.setCancelable(true);
-                    builder1.setPositiveButton(
-                            "OK",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    finish();
-                                }
-                            });
-
-                    AlertDialog alert11 = builder1.create();
-                    alert11.show();
+                    final Dialog dialog = new Dialog(RightOrRonActivity.this,R.style.DialogCustomTheme);
+                    dialog.setContentView(R.layout.dialog_game_over);
+                    dialog.setTitle("");
+                    TextView txtscore = (TextView)dialog.findViewById(R.id.dialog_score_txt_score);
+                    txtscore.setTypeface(typeface);
+                    txtscore.setText("Score : "+score[0]);
+                    ImageView btnClose = (ImageView) dialog.findViewById(R.id.dialog_score_back_btn);
+                    ImageView btnAgain = (ImageView)dialog.findViewById(R.id.dialog_score_again_btn);
+                    btnClose.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.dismiss();
+                            finish();
+                        }
+                    });
+                    btnAgain.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.dismiss();
+                            reload();
+                        }
+                    });
+                    dialog.show();
                 }
 
             }
@@ -76,27 +86,36 @@ public class RightOrRonActivity extends AppCompatActivity {
         btnRon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!answer[0]&&size[0]!=0){
+                if (!answer[0]){
                     answer[0] = StarGame();
-                    size[0]--;
                     score[0]++;
                     txtScore.setText("" + score[0]);
                 }
                 else{
                     //ket thuc
-                    AlertDialog.Builder builder1 = new AlertDialog.Builder(RightOrRonActivity.this);
-                    builder1.setMessage("Điểm số : " + score[0]);
-                    builder1.setCancelable(true);
-                    builder1.setPositiveButton(
-                            "OK",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    finish();
-                                }
-                            });
-
-                    AlertDialog alert11 = builder1.create();
-                    alert11.show();
+                    final Dialog dialog = new Dialog(RightOrRonActivity.this,R.style.DialogCustomTheme);
+                    dialog.setContentView(R.layout.dialog_game_over);
+                    dialog.setTitle("");
+                    TextView txtscore = (TextView)dialog.findViewById(R.id.dialog_score_txt_score);
+                    txtscore.setTypeface(typeface);
+                    txtscore.setText("Score : "+score[0]);
+                    ImageView btnClose = (ImageView) dialog.findViewById(R.id.dialog_score_back_btn);
+                    ImageView btnAgain = (ImageView)dialog.findViewById(R.id.dialog_score_again_btn);
+                    btnClose.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.dismiss();
+                            finish();
+                        }
+                    });
+                    btnAgain.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.dismiss();
+                            reload();
+                        }
+                    });
+                    dialog.show();
                 }
 
             }
@@ -108,6 +127,17 @@ public class RightOrRonActivity extends AppCompatActivity {
 //                finish();
 //            }
 //        });
+    }
+
+    private void reload() {
+
+            Intent intent = getIntent();
+            overridePendingTransition(0, 0);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            finish();
+            overridePendingTransition(0, 0);
+            startActivity(intent);
+
     }
 
     private boolean StarGame() {
