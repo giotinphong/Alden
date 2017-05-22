@@ -7,4 +7,5 @@
     <color name="sheetRow2">#cccccc</color>
     <color name="headRow">#cec600</color>
     <color name="text_color_black">#000000</color>
+    <color name="shadow">#51000000</color>
 </resources>

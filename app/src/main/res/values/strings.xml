@@ -16,4 +16,7 @@
     <string name="stop">Kết Thúc</string>
     <string name="score">0</string>
     <string name="rightorron">Đoán màu</string>
+    <string name="game_color_name">Trò chơi đoán màu</string>
+    <string name="start">Bắt đầu</string>
+    <string name="rule">Xem luật</string>
 </resources>

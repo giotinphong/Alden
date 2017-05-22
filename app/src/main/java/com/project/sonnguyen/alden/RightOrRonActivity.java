@@ -78,6 +78,7 @@ public class RightOrRonActivity extends AppCompatActivity {
                             reload();
                         }
                     });
+                    dialog.setCanceledOnTouchOutside(false);
                     dialog.show();
                 }
 
@@ -115,6 +116,7 @@ public class RightOrRonActivity extends AppCompatActivity {
                             reload();
                         }
                     });
+                    dialog.setCanceledOnTouchOutside(false);
                     dialog.show();
                 }
 

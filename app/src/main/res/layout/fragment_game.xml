@@ -8,29 +8,70 @@
     <!-- TODO: Update blank fragment layout -->
 
 
-    <android.support.v7.widget.CardView
-        android:id="@+id/frag_game_cv_right_or_ron"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:elevation="@dimen/cardview_default_elevation">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:src="@drawable/color_image"
-                android:scaleType="fitXY"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textSize="@dimen/text_lager_size"
-                android:textStyle="bold"
-                android:layout_marginTop="10dp"
-                android:text="@string/rightorron"
-                />
-        </LinearLayout>
-    </android.support.v7.widget.CardView>
+   <ScrollView
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content">
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content">
+           <android.support.v7.widget.CardView
+               android:layout_width="match_parent"
+               android:layout_marginEnd="5dp"
+               android:layout_marginStart="5dp"
+               android:layout_marginBottom="10dp"
+               android:id="@+id/frag_game_cv_right_or_ron"
+               android:elevation="5dp"
+               android:layout_height="wrap_content">
+               <LinearLayout
+                   android:orientation="vertical"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content">
+                   <RelativeLayout
+                       android:layout_width="match_parent"
+                       android:layout_height="150dp"
+                       android:gravity="bottom"
+                       android:background="@drawable/color_game_bg">
+                       <LinearLayout
+                           android:layout_width="match_parent"
+                           android:layout_height="50dp"
+                           android:background="@color/shadow">
+                           <TextView
+                               android:layout_width="wrap_content"
+                               android:layout_height="wrap_content"
+                               android:text="@string/game_color_name"
+                               android:textColor="@android:color/white"
+                               android:textSize="24dp"/>
+                       </LinearLayout>
+                   </RelativeLayout>
+                   <TextView
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:textSize="@dimen/text_nomarl"
+                       android:text="Sẽ có các dòng chữ tiếng anh xuất hiện cùng với một màu, ba mẹ sẽ cùng trẻ kiểm tra xem…"/>
+
+                   <LinearLayout
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:orientation="horizontal"
+                   android:layout_marginTop="10dp">
+                   <Button
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:background="#00ffffff"
+                       android:textColor="#009688"
+                       android:text="@string/start"/>
+                   <Button
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:background="#00ffffff"
+                       android:textColor="#009688"
+
+                       android:text="@string/rule"/>
+               </LinearLayout>
+               </LinearLayout>
+
+
+           </android.support.v7.widget.CardView>
+       </LinearLayout>
+   </ScrollView>
 </LinearLayout>
