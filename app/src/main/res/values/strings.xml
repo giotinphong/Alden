@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Alden</string>
+    <string name="user_code">Mã code của bé</string>
+    <string name="signing">Đăng nhập</string>
+    <string name="fogot_pass"><u>Nếu quên mật khẩu xin vui lòng gọi</u> 0935.372.376</string>
+    <string name="contact">Liên hệ : 114 Huỳnh Ngọc Huệ - Q.Thanh Khê - TP. Đà Nẵng</string>
+    <string name="name">Trung Tâm Anh ngữ Thiếu nhi Alden</string>
+    <string name="slogan">Tự tin_Sáng tạo</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="stop">Kết Thúc</string>
+    <string name="score">0</string>
+    <string name="rightorron">Đoán màu</string>
+</resources>
