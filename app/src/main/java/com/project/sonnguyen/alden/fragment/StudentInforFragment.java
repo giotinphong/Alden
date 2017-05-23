@@ -3,12 +3,23 @@ package com.project.sonnguyen.alden.fragment;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.project.sonnguyen.alden.R;
+import com.project.sonnguyen.alden.data.StudentInformation;
+
+import org.w3c.dom.Text;
 
 
 /**
@@ -24,12 +35,15 @@ public class StudentInforFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
+    private TextView txtName,txtBithday,txtClassName,txtTeacherName,txtParentName,txtParentNumber,txtNumOfClass;
+    private FloatingActionButton fabCall;
+    private ImageView imgAvatar;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    private StudentInformation studentInformation;
 
     public StudentInforFragment() {
         // Required empty public constructor
@@ -66,7 +80,41 @@ public class StudentInforFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_student_infor, container, false);
+        View v =  inflater.inflate(R.layout.fragment_student_infor, container, false);
+        //create component
+        txtBithday = (TextView)v.findViewById(R.id.frag_student_infor_txt_bithday);
+        txtClassName = (TextView)v.findViewById(R.id.frag_student_infor_txt_classname);
+        txtName = (TextView)v.findViewById(R.id.frag_student_infor_txt_studentname);
+        txtNumOfClass = (TextView)v.findViewById(R.id.frag_student_infor_txt_num_of_class);
+        txtParentName = (TextView)v.findViewById(R.id.frag_student_infor_txt_parentname);
+        txtParentNumber = (TextView)v.findViewById(R.id.frag_student_infor_txt_parentnumber);
+        txtTeacherName = (TextView) v.findViewById(R.id.frag_student_infor_txt_teachername);
+        fabCall = (FloatingActionButton)v.findViewById(R.id.frag_student_infor_fab_call);
+        imgAvatar = (ImageView)v.findViewById(R.id.frag_student_infor_img_avatar);
+        //get data
+        DatabaseReference mRef = FirebaseDatabase.getInstance().getReference();
+        //get student information
+         studentInformation = new StudentInformation();
+        mRef.child("StudentInformation").child("0001").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                studentInformation = dataSnapshot.getValue(StudentInformation.class);
+                studentInformation.setStudentcode(dataSnapshot.getKey());
+                txtTeacherName.setText(studentInformation.getTeacher());
+                txtParentNumber.setText(studentInformation.getParentnumber());
+                txtParentName.setText(studentInformation.getParentname());
+                txtNumOfClass.setText(""+studentInformation.getNumofclass());
+                txtBithday.setText(studentInformation.getBithday());
+                txtName.setText(studentInformation.getName());
+                txtClassName.setText(studentInformation.getClassname());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        return v;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

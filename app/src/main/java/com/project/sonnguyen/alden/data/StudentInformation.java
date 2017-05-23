@@ -12,7 +12,7 @@ public class StudentInformation {
     private String Parentname;
     private String Parentnumber;
     private String Teachernumber;
-    private String Numofclass;
+    private int Numofclass;
     private String Studentcode;
 
     public String getStudentcode() {
@@ -79,11 +79,11 @@ public class StudentInformation {
         Teachernumber = teachernumber;
     }
 
-    public String getNumofclass() {
+    public int getNumofclass() {
         return Numofclass;
     }
 
-    public void setNumofclass(String numofclass) {
+    public void setNumofclass(int numofclass) {
         Numofclass = numofclass;
     }
 
