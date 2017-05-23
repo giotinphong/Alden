@@ -19,4 +19,6 @@
     <string name="game_color_name">Trò chơi đoán màu</string>
     <string name="start">Bắt đầu</string>
     <string name="rule">Xem luật</string>
+    <string name="game_animal_name">Trò chơi đoán tên loài vật</string>
+    <string name="game_animal_rule">Sẽ xuất hiện các con vật, hãy cùng đoán xem con vật đó tên gì nhé</string>
 </resources>

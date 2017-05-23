@@ -12,6 +12,7 @@
        android:layout_width="match_parent"
        android:layout_height="wrap_content">
        <LinearLayout
+           android:orientation="vertical"
            android:layout_width="match_parent"
            android:layout_height="wrap_content">
            <android.support.v7.widget.CardView
@@ -55,19 +56,82 @@
                    android:orientation="horizontal"
                    android:layout_marginTop="10dp">
                    <Button
+                       android:focusable="true"
+                       android:id="@+id/frag_game_color_btn_start"
                        android:layout_width="wrap_content"
                        android:layout_height="wrap_content"
                        android:background="#00ffffff"
                        android:textColor="#009688"
                        android:text="@string/start"/>
                    <Button
+                       android:focusable="true"
+                       android:id="@+id/frag_game_color_btn_rule"
                        android:layout_width="wrap_content"
                        android:layout_height="wrap_content"
                        android:background="#00ffffff"
                        android:textColor="#009688"
-
                        android:text="@string/rule"/>
                </LinearLayout>
+               </LinearLayout>
+
+
+           </android.support.v7.widget.CardView>
+           <android.support.v7.widget.CardView
+               android:layout_width="match_parent"
+               android:layout_marginEnd="5dp"
+               android:layout_marginStart="5dp"
+               android:layout_marginBottom="10dp"
+               android:elevation="5dp"
+               android:layout_height="wrap_content">
+               <LinearLayout
+                   android:orientation="vertical"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content">
+                   <RelativeLayout
+                       android:layout_width="match_parent"
+                       android:layout_height="150dp"
+                       android:gravity="bottom"
+                       android:background="@drawable/animal_bg">
+                       <LinearLayout
+                           android:layout_width="match_parent"
+                           android:layout_height="50dp"
+                           android:background="@color/shadow">
+                           <TextView
+                               android:layout_width="wrap_content"
+                               android:layout_height="wrap_content"
+                               android:text="@string/game_animal_name"
+                               android:textColor="@android:color/white"
+                               android:textSize="24dp"/>
+                       </LinearLayout>
+                   </RelativeLayout>
+                   <TextView
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:textSize="@dimen/text_nomarl"
+                       android:text="@string/game_animal_rule"/>
+
+                   <LinearLayout
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:orientation="horizontal"
+                       android:layout_marginTop="10dp">
+                       <Button
+                           android:focusable="true"
+                           android:id="@+id/frag_game_animal_btn_start"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:background="#00ffffff"
+                           android:textColor="#009688"
+                           android:text="@string/start"/>
+                       <Button
+                           android:focusable="true"
+                           android:id="@+id/frag_game_animal_btn_rule"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:background="#00ffffff"
+                           android:textColor="#009688"
+                           android:text="@string/rule"/>
+                   </LinearLayout>
                </LinearLayout>
 
 

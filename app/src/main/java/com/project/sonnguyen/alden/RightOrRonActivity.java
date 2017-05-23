@@ -22,7 +22,10 @@ public class RightOrRonActivity extends AppCompatActivity {
     ImageView btnRight,btnRon;
     TextView txtText,txtScore;
     LinearLayout lnColorDisplay;
-    ArrayList<RightOrRon> rightOrRonArrayList;
+    //ArrayList<RightOrRon> rightOrRonArrayList;
+    private ArrayList<String> textlist;
+    private ArrayList<Integer> colorlist;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
@@ -38,7 +41,7 @@ public class RightOrRonActivity extends AppCompatActivity {
         txtText.setTypeface(typeface);
         txtScore.setTypeface(typeface);
         lnColorDisplay = (LinearLayout) findViewById(R.id.acti_rightron_linear_color);
-        rightOrRonArrayList = new ArrayList<>();
+        //rightOrRonArrayList = new ArrayList<>();
         initToList();
         final int[] score = {0};
         txtScore.setText("" + score[0]);
@@ -47,7 +50,7 @@ public class RightOrRonActivity extends AppCompatActivity {
         btnRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (answer[0]&& rightOrRonArrayList.size()!=0){
+                if (answer[0]){
                     //dung
                     answer[0] = StarGame();
                     score[0]++;
@@ -143,51 +146,103 @@ public class RightOrRonActivity extends AppCompatActivity {
     }
 
     private boolean StarGame() {
+//        Random rand = new Random();
+//        int ran = rand.nextInt(rightOrRonArrayList.size());
+//        final RightOrRon ques = rightOrRonArrayList.get(ran);
+//        if(ques.getColor()==android.R.color.black)
+//            txtText.setTextColor(getResources().getColor(android.R.color.white));
+//        else
+//            txtText.setTextColor(getResources().getColor(android.R.color.black));
+//
+//        rightOrRonArrayList.remove(ques);
+//        txtText.setText(ques.getText());
+//        lnColorDisplay.setBackgroundResource(ques.getColor());
+//        return ques.isAnswer();
         Random rand = new Random();
-        int ran = rand.nextInt(rightOrRonArrayList.size());
-        final RightOrRon ques = rightOrRonArrayList.get(ran);
-        if(ques.getColor()==android.R.color.black)
+        int ran_txt = rand.nextInt(textlist.size());
+        int ran_cl = rand.nextInt(colorlist.size());
+        String txt = textlist.get(ran_txt);
+        int cl = colorlist.get(ran_cl);
+            if(cl ==android.R.color.black)
             txtText.setTextColor(getResources().getColor(android.R.color.white));
         else
             txtText.setTextColor(getResources().getColor(android.R.color.black));
-
-        rightOrRonArrayList.remove(ques);
-        txtText.setText(ques.getText());
-        lnColorDisplay.setBackgroundResource(ques.getColor());
-        return ques.isAnswer();
+        txtText.setText(txt);
+        lnColorDisplay.setBackgroundResource(cl);
+        return compareColor(txt,cl);
     }
 
     private void initToList() {
-        rightOrRonArrayList.add( new RightOrRon(android.R.color.black,"BLACK",true));
-        rightOrRonArrayList.add( new RightOrRon(android.R.color.white,"WHITE",true));
-        rightOrRonArrayList.add( new RightOrRon(android.R.color.darker_gray,"GRAY",true));
-        rightOrRonArrayList.add( new RightOrRon(android.R.color.holo_orange_light,"ORANGE",true));
-        rightOrRonArrayList.add( new RightOrRon(android.R.color.holo_blue_bright,"BRIGHT",true));
-        rightOrRonArrayList.add( new RightOrRon(android.R.color.holo_green_light,"GREEN",true));
-        rightOrRonArrayList.add( new RightOrRon(android.R.color.holo_blue_light,"BLUE",true));
-        rightOrRonArrayList.add( new RightOrRon(android.R.color.holo_red_light,"RED",true));
-        rightOrRonArrayList.add( new RightOrRon(android.R.color.holo_purple,"PURPLE",true));
-        //ron
-        rightOrRonArrayList.add( new RightOrRon(android.R.color.black,"WHITE",false));
-        rightOrRonArrayList.add( new RightOrRon(android.R.color.black,"GRAY",false));
-        rightOrRonArrayList.add( new RightOrRon(android.R.color.black,"ORANGE",false));
-        rightOrRonArrayList.add( new RightOrRon(android.R.color.black,"GREEN",false));
-        rightOrRonArrayList.add( new RightOrRon(android.R.color.black,"RED",false));
-        //
-        rightOrRonArrayList.add( new RightOrRon(android.R.color.white,"RED",false));
-        rightOrRonArrayList.add( new RightOrRon(android.R.color.white,"GRAY",false));
-        rightOrRonArrayList.add( new RightOrRon(android.R.color.white,"GREEN",false));
-        rightOrRonArrayList.add( new RightOrRon(android.R.color.white,"PURPLE",false));
-        rightOrRonArrayList.add( new RightOrRon(android.R.color.white,"BLUE",false));
-        //
-        rightOrRonArrayList.add( new RightOrRon(android.R.color.holo_blue_light,"PURPLE",false));
-        rightOrRonArrayList.add( new RightOrRon(android.R.color.holo_blue_light,"GREEN",false));
-        rightOrRonArrayList.add( new RightOrRon(android.R.color.holo_blue_light,"GRAY",false));
+        //1 list chu
+         textlist = new ArrayList<>();
+        textlist.add( "BLACK");
+        textlist.add("WHITE");
+        textlist.add("GRAY");
+        textlist.add("ORANGE");
+        textlist.add("BRIGHT");
+        textlist.add("GREEN");
+        textlist.add("BLUE");
+        textlist.add("RED");
+        textlist.add("PURPLE");
+        //1 listmau
+         colorlist = new ArrayList<>();
+        colorlist.add(android.R.color.black);
+        colorlist.add(android.R.color.white);
+        colorlist.add(android.R.color.darker_gray);
+        colorlist.add(android.R.color.holo_orange_light);
+        colorlist.add(android.R.color.holo_blue_bright);
+        colorlist.add(android.R.color.holo_green_light);
+        colorlist.add(android.R.color.holo_blue_light);
+        colorlist.add(android.R.color.holo_red_light);
+        colorlist.add(android.R.color.holo_purple);
 
-
-
-
-
-
+//        //1 method so sanh
+//        //compareColor(textString,color);
+//        rightOrRonArrayList.add( new RightOrRon(android.R.color.black,"BLACK",true));
+//        rightOrRonArrayList.add( new RightOrRon(android.R.color.white,"WHITE",true));
+//        rightOrRonArrayList.add( new RightOrRon(android.R.color.darker_gray,"GRAY",true));
+//        rightOrRonArrayList.add( new RightOrRon(android.R.color.holo_orange_light,"ORANGE",true));
+//        rightOrRonArrayList.add( new RightOrRon(android.R.color.holo_blue_bright,"BRIGHT",true));
+//        rightOrRonArrayList.add( new RightOrRon(android.R.color.holo_green_light,"GREEN",true));
+//        rightOrRonArrayList.add( new RightOrRon(android.R.color.holo_blue_light,"BLUE",true));
+//        rightOrRonArrayList.add( new RightOrRon(android.R.color.holo_red_light,"RED",true));
+//        rightOrRonArrayList.add( new RightOrRon(android.R.color.holo_purple,"PURPLE",true));
+//        //ron
+//        rightOrRonArrayList.add( new RightOrRon(android.R.color.black,"WHITE",false));
+//        rightOrRonArrayList.add( new RightOrRon(android.R.color.black,"GRAY",false));
+//        rightOrRonArrayList.add( new RightOrRon(android.R.color.black,"ORANGE",false));
+//        rightOrRonArrayList.add( new RightOrRon(android.R.color.black,"GREEN",false));
+//        rightOrRonArrayList.add( new RightOrRon(android.R.color.black,"RED",false));
+//        //
+//        rightOrRonArrayList.add( new RightOrRon(android.R.color.white,"RED",false));
+//        rightOrRonArrayList.add( new RightOrRon(android.R.color.white,"GRAY",false));
+//        rightOrRonArrayList.add( new RightOrRon(android.R.color.white,"GREEN",false));
+//        rightOrRonArrayList.add( new RightOrRon(android.R.color.white,"PURPLE",false));
+//        rightOrRonArrayList.add( new RightOrRon(android.R.color.white,"BLUE",false));
+//        //
+//        rightOrRonArrayList.add( new RightOrRon(android.R.color.holo_blue_light,"PURPLE",false));
+//        rightOrRonArrayList.add( new RightOrRon(android.R.color.holo_blue_light,"GREEN",false));
+//        rightOrRonArrayList.add( new RightOrRon(android.R.color.holo_blue_light,"GRAY",false));
+    }
+    private boolean compareColor(String tx,int cl){
+        if(tx == "BLACK" && cl == android.R.color.black)
+            return true;
+        else  if(tx == "WHITE" && cl == android.R.color.white)
+            return true;
+        else  if(tx == "GRAY" && cl == android.R.color.darker_gray)
+            return true;
+        else  if(tx == "ORANGE" && cl == android.R.color.holo_orange_light)
+            return true;
+        else  if(tx == "BRIGHT" && cl == android.R.color.holo_blue_bright)
+            return true;
+        else  if(tx == "GREEN" && cl == android.R.color.holo_green_light)
+            return true;
+        else  if(tx == "BLUE" && cl == android.R.color.holo_blue_light)
+            return true;
+        else  if(tx == "RED" && cl == android.R.color.holo_red_light)
+            return true;
+        else  if(tx == "PURPLE" && cl == android.R.color.holo_purple)
+            return true;
+        return false;
     }
 }

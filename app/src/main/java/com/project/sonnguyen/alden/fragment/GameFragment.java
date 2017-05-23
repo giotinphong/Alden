@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.project.sonnguyen.alden.R;
 import com.project.sonnguyen.alden.RightOrRonActivity;
@@ -72,6 +71,13 @@ public class GameFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v =  inflater.inflate(R.layout.fragment_game, container, false);
+        Button btnStart = (Button)v.findViewById(R.id.frag_game_color_btn_start);
+        btnStart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), RightOrRonActivity.class));
+            }
+        });
         CardView btn = (CardView) v.findViewById(R.id.frag_game_cv_right_or_ron);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
