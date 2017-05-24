@@ -1,14 +1,30 @@
 package com.project.sonnguyen.alden.fragment;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.project.sonnguyen.alden.R;
+import com.project.sonnguyen.alden.data.Activites;
+
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.util.ArrayList;
 
 
 /**
@@ -24,6 +40,7 @@ public class ActivitiesFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static final int PICK_PHOTO_FOR_AVATAR = 1;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -66,7 +83,14 @@ public class ActivitiesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_activities, container, false);
+        View v =  inflater.inflate(R.layout.fragment_activities, container, false);
+        final ImageView imgTest = (ImageView)v.findViewById(R.id.frag_activities_img_test);
+        final ArrayList<Activites> activitesArrayList = new ArrayList<>();
+        Glide.with(getContext())
+                .load("http://i.imgur.com/N3y2zTG.jpg")
+                .into(imgTest);
+
+        return v ;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -106,5 +130,27 @@ public class ActivitiesFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+    public void pickImage() {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
+        startActivityForResult(intent, PICK_PHOTO_FOR_AVATAR);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_PHOTO_FOR_AVATAR && resultCode == Activity.RESULT_OK) {
+            if (data == null) {
+                //Display an error
+                return;
+            }
+            try {
+                InputStream inputStream = getContext().getContentResolver().openInputStream(data.getData());
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            //Now you can do whatever you want with your inpustream, save it as file, upload to a server, decode a bitmap...
+        }
     }
 }

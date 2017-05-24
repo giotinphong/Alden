@@ -30,7 +30,6 @@ import java.io.IOException;
 public class MainActivity extends AppCompatActivity implements ActionBar.TabListener, GameFragment.OnFragmentInteractionListener
 ,StudentInforFragment.OnFragmentInteractionListener,ActivitiesFragment.OnFragmentInteractionListener,StudentResultFragment.OnFragmentInteractionListener,
         StudyContentFragment.OnFragmentInteractionListener {
-
     private ViewPager mViewPager;
 
     @Override

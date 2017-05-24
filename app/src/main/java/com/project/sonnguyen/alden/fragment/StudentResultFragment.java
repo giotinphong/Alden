@@ -8,8 +8,17 @@ import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.project.sonnguyen.alden.R;
+import com.project.sonnguyen.alden.data.ClassStatic;
+import com.project.sonnguyen.alden.data.StudentInformation;
 
 import ernestoyaquello.com.verticalstepperform.VerticalStepperFormLayout;
 import ernestoyaquello.com.verticalstepperform.interfaces.VerticalStepperForm;
@@ -32,8 +41,10 @@ public class StudentResultFragment extends Fragment{
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
+    private RoundCornerProgressBar pbStated,pbRightStated,pbHomework,pbStar;
+    private TextView txtStated,txtRightStated,txtHomework,txtStar;
     private OnFragmentInteractionListener mListener;
+    private String ClassName;
 
     public StudentResultFragment() {
         // Required empty public constructor
@@ -71,11 +82,53 @@ public class StudentResultFragment extends Fragment{
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v  =  inflater.inflate(R.layout.fragment_student_result, container, false);
-        String[] mySteps = {"Name", "Email", "Phone Number"};
-        int colorPrimary = ContextCompat.getColor(getContext(), R.color.colorPrimary);
-        int colorPrimaryDark = ContextCompat.getColor(getContext(), R.color.colorPrimaryDark);
+        pbHomework = (RoundCornerProgressBar)v.findViewById(R.id.frag_student_result_process_homework);
+        pbRightStated = (RoundCornerProgressBar)v.findViewById(R.id.frag_student_result_process_rightstated);
+        pbStar = (RoundCornerProgressBar)v.findViewById(R.id.frag_student_result_process_star);
+        pbStated = (RoundCornerProgressBar)v.findViewById(R.id.frag_student_result_process_stated);
+        txtHomework = (TextView)v.findViewById(R.id.frag_student_result_txt_homework);
+        txtRightStated = (TextView)v.findViewById(R.id.frag_student_result_txt_rightstated);
+        txtStar = (TextView)v.findViewById(R.id.frag_student_result_txt_star);
+        txtStated = (TextView)v.findViewById(R.id.frag_student_result_txt_stated);
 
 
+
+        final DatabaseReference mRef = FirebaseDatabase.getInstance().getReference();
+         ClassName = "";
+        mRef.child("StudentInformation").child("0001").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                StudentInformation studentInformation = dataSnapshot.getValue(StudentInformation.class);
+                ClassName = studentInformation.getClassname();
+                mRef.child("Class").child(ClassName).child("Tuan1").child("0001").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        ClassStatic classStatic = dataSnapshot.getValue(ClassStatic.class);
+                        classStatic.setStudentcode(dataSnapshot.getKey());
+                        pbStated.setProgress(classStatic.getNumstated());
+                        pbStar.setProgress(classStatic.getStar());
+                        pbRightStated.setProgress(classStatic.getNumofrightstated());
+                        pbHomework.setProgress(classStatic.getHomework());
+                        txtStated.setText(classStatic.getNumstated()+" lần ");
+                        txtStar.setText(classStatic.getStar()+" lần");
+                        txtRightStated.setText(classStatic.getNumofrightstated()+" lần");
+                        txtHomework.setText(classStatic.getHomework()+" sao");
+
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
         return v;
     }
 

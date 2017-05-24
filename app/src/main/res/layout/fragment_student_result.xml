@@ -1,5 +1,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_height="wrap_content"
@@ -933,6 +934,104 @@
                 </LinearLayout>
             </TableRow>
         </TableLayout>
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:elevation="5dp"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_lager_size"
+                android:text="@string/static_week"/>
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TableRow android:layout_marginTop="5dp">
+                    <TextView android:text="Phát biểu  " />
+                        <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
+                            android:id="@+id/frag_student_result_process_stated"
+                            android:layout_width="match_parent"
+                            android:layout_height="20dp"
+                            app:rcBackgroundColor="#737171"
+                            app:rcBackgroundPadding="5dp"
+                            android:layout_weight="1"
+                            app:rcMax="30"
+                            app:paddingEnd="5dp"
+                            app:rcProgress="30"
+                            app:rcProgressColor="#e40606"
+                            app:rcRadius="10dp" />
+
+                        <TextView
+                            android:layout_height="wrap_content"
+                            android:id="@+id/frag_student_result_txt_stated"
+                            android:layout_width="wrap_content"
+                            android:text="12 lần"/>
+
+                </TableRow>
+                <TableRow android:layout_marginTop="5dp">
+                    <TextView android:text="Trả lời đúng " />
+                    <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
+                        android:id="@+id/frag_student_result_process_rightstated"
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        app:rcProgress="30"
+                        android:layout_weight="1"
+                        app:rcMax="30"
+                        app:paddingEnd="5dp"
+                        app:rcRadius="10dp"
+                        app:rcBackgroundPadding="5dp"
+                        app:rcReverse="false"
+                        app:rcProgressColor="#fd8b12"
+                        app:rcBackgroundColor="@color/progressbar_bg_color" />
+                    <TextView android:id="@+id/frag_student_result_txt_rightstated"
+                        android:layout_width="wrap_content"
+                        android:text="12 lần"/>
+                </TableRow>
+                <TableRow android:layout_marginTop="5dp">                    <TextView android:text="Chưa thuộc bài " />
+                    <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
+                        android:id="@+id/frag_student_result_process_homework"
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        app:rcProgress="30"
+                        app:rcMax="30"
+                        app:paddingEnd="5dp"
+                        app:rcRadius="10dp"
+                        app:rcBackgroundPadding="5dp"
+                        app:rcReverse="false"
+                        app:rcProgressColor="#354ffc"
+                        android:layout_weight="1"
+                        app:rcBackgroundColor="@color/progressbar_bg_color" />
+                    <TextView android:id="@+id/frag_student_result_txt_homework"
+                        android:layout_width="wrap_content"
+                        android:text="12 lần"/>
+                </TableRow>
+                <TableRow android:layout_marginTop="5dp">
+                    <TextView android:text="Sao tuần " />
+                    <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
+                        android:id="@+id/frag_student_result_process_star"
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        app:rcProgress="30"
+                        app:rcSecondaryProgress="31"
+                        app:rcMax="30"
+                        android:layout_weight="1"
+                        app:paddingEnd="5dp"
+                        app:rcRadius="10dp"
+                        app:rcBackgroundPadding="5dp"
+                        app:rcReverse="false"
+                        app:rcProgressColor="#fffb1a"
+                        app:rcBackgroundColor="@color/progressbar_bg_color" />
+                    <TextView android:id="@+id/frag_student_result_txt_star"
+                        android:layout_width="wrap_content"
+                        android:text="12 lần"/>
+                </TableRow>
+            </TableLayout>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
 
 
 </LinearLayout>
