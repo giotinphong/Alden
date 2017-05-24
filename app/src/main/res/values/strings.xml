@@ -22,4 +22,5 @@
     <string name="game_animal_name">Trò chơi đoán tên loài vật</string>
     <string name="game_animal_rule">Sẽ xuất hiện các con vật, hãy cùng đoán xem con vật đó tên gì nhé</string>
     <string name="static_week">Thống kê tuần</string>
+    <string name="star_static">Thống kê sao</string>
 </resources>

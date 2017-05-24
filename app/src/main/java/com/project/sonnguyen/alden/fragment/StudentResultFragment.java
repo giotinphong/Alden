@@ -1,6 +1,7 @@
 package com.project.sonnguyen.alden.fragment;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -20,8 +21,23 @@ import com.project.sonnguyen.alden.R;
 import com.project.sonnguyen.alden.data.ClassStatic;
 import com.project.sonnguyen.alden.data.StudentInformation;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import ernestoyaquello.com.verticalstepperform.VerticalStepperFormLayout;
 import ernestoyaquello.com.verticalstepperform.interfaces.VerticalStepperForm;
+import lecho.lib.hellocharts.model.Axis;
+import lecho.lib.hellocharts.model.Column;
+import lecho.lib.hellocharts.model.ColumnChartData;
+import lecho.lib.hellocharts.model.Line;
+import lecho.lib.hellocharts.model.LineChartData;
+import lecho.lib.hellocharts.model.PointValue;
+import lecho.lib.hellocharts.model.SubcolumnValue;
+import lecho.lib.hellocharts.util.ChartUtils;
+import lecho.lib.hellocharts.view.ColumnChartView;
+import lecho.lib.hellocharts.view.LineChartView;
+
+import static android.R.attr.data;
 
 
 /**
@@ -45,6 +61,8 @@ public class StudentResultFragment extends Fragment{
     private TextView txtStated,txtRightStated,txtHomework,txtStar;
     private OnFragmentInteractionListener mListener;
     private String ClassName;
+    private ColumnChartView chartView;
+    private ColumnChartData chartData;
 
     public StudentResultFragment() {
         // Required empty public constructor
@@ -90,8 +108,9 @@ public class StudentResultFragment extends Fragment{
         txtRightStated = (TextView)v.findViewById(R.id.frag_student_result_txt_rightstated);
         txtStar = (TextView)v.findViewById(R.id.frag_student_result_txt_star);
         txtStated = (TextView)v.findViewById(R.id.frag_student_result_txt_stated);
-
-
+         chartView = (ColumnChartView)v.findViewById(R.id.chart);
+         chartData = new ColumnChartData();
+        generateDefaultData();
 
         final DatabaseReference mRef = FirebaseDatabase.getInstance().getReference();
          ClassName = "";
@@ -165,5 +184,43 @@ public class StudentResultFragment extends Fragment{
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+    private void generateDefaultData() {
+        int numSubcolumns = 1;
+        int numColumns = 12;
+        // Column can have many subcolumns, here by default I use 1 subcolumn in each of 8 columns.
+        List<Column> columns = new ArrayList<Column>();
+        List<SubcolumnValue> values;
+        for (int i = 0; i < numColumns; ++i) {
+
+            values = new ArrayList<SubcolumnValue>();
+            for (int j = 0; j < numSubcolumns; ++j) {
+                values.add(new SubcolumnValue((float) Math.random() * 50f + 5, ChartUtils.pickColor()));
+            }
+
+            Column column = new Column(values);
+            column.setHasLabels(true);
+            column.setHasLabelsOnlyForSelected(false);
+            columns.add(column);
+        }
+
+        chartData = new ColumnChartData(columns);
+
+
+            Axis axisX = new Axis();
+            Axis axisY = new Axis().setHasLines(true);
+
+                axisX.setName("Tuần");
+                axisY.setName("Số sao");
+
+            chartData.setAxisXBottom(axisX);
+            chartData.setAxisYLeft(axisY);
+
+//            chartData.setAxisXBottom(null);
+//            chartData.setAxisYLeft(null);
+
+
+        chartView.setColumnChartData(chartData);
+        chartView.setZoomEnabled(false);
     }
 }
