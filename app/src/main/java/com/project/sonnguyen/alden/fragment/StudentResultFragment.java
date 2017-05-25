@@ -26,6 +26,7 @@ import java.util.List;
 
 import ernestoyaquello.com.verticalstepperform.VerticalStepperFormLayout;
 import ernestoyaquello.com.verticalstepperform.interfaces.VerticalStepperForm;
+import lecho.lib.hellocharts.listener.ColumnChartOnValueSelectListener;
 import lecho.lib.hellocharts.model.Axis;
 import lecho.lib.hellocharts.model.Column;
 import lecho.lib.hellocharts.model.ColumnChartData;
@@ -38,6 +39,7 @@ import lecho.lib.hellocharts.view.ColumnChartView;
 import lecho.lib.hellocharts.view.LineChartView;
 
 import static android.R.attr.data;
+import static com.project.sonnguyen.alden.LoginActivity.code;
 
 
 /**
@@ -58,7 +60,7 @@ public class StudentResultFragment extends Fragment{
     private String mParam1;
     private String mParam2;
     private RoundCornerProgressBar pbStated,pbRightStated,pbHomework,pbStar;
-    private TextView txtStated,txtRightStated,txtHomework,txtStar;
+    private TextView txtStated,txtRightStated,txtHomework,txtStar,txtWeek;
     private OnFragmentInteractionListener mListener;
     private String ClassName;
     private ColumnChartView chartView;
@@ -108,38 +110,48 @@ public class StudentResultFragment extends Fragment{
         txtRightStated = (TextView)v.findViewById(R.id.frag_student_result_txt_rightstated);
         txtStar = (TextView)v.findViewById(R.id.frag_student_result_txt_star);
         txtStated = (TextView)v.findViewById(R.id.frag_student_result_txt_stated);
+        txtWeek = (TextView)v.findViewById(R.id.frag_student_result_txt_week);
          chartView = (ColumnChartView)v.findViewById(R.id.chart);
          chartData = new ColumnChartData();
-        generateDefaultData();
+        //generateDefaultData();
+        final ArrayList<Integer> classStaticArrayList = new ArrayList<>();
+        for(int i = 1;i<=12;i++)
+            classStaticArrayList.add(i);
 
+        final ArrayList<ClassStatic> staticArrayList = new ArrayList<>();
         final DatabaseReference mRef = FirebaseDatabase.getInstance().getReference();
          ClassName = "";
-        mRef.child("StudentInformation").child("0001").addValueEventListener(new ValueEventListener() {
+        mRef.child("StudentInformation").child(code).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 StudentInformation studentInformation = dataSnapshot.getValue(StudentInformation.class);
                 ClassName = studentInformation.getClassname();
-                mRef.child("Class").child(ClassName).child("Tuan1").child("0001").addValueEventListener(new ValueEventListener() {
+                for(final int classWeek : classStaticArrayList)
+                mRef.child("Class").child(ClassName).child("Tuan"+classWeek).child(code).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         ClassStatic classStatic = dataSnapshot.getValue(ClassStatic.class);
-                        classStatic.setStudentcode(dataSnapshot.getKey());
-                        pbStated.setProgress(classStatic.getNumstated());
-                        pbStar.setProgress(classStatic.getStar());
-                        pbRightStated.setProgress(classStatic.getNumofrightstated());
-                        pbHomework.setProgress(classStatic.getHomework());
-                        txtStated.setText(classStatic.getNumstated()+" lần ");
-                        txtStar.setText(classStatic.getStar()+" lần");
-                        txtRightStated.setText(classStatic.getNumofrightstated()+" lần");
-                        txtHomework.setText(classStatic.getHomework()+" sao");
-
-
+                        //classStatic.setStudentcode(code);
+                        if(classStatic!=null) {
+                            classStatic.setWeeks(classWeek);
+                            staticArrayList.add(classStatic);
+                            pbStated.setProgress(classStatic.getNumstated());
+                            pbStar.setProgress(classStatic.getStar());
+                            pbRightStated.setProgress(classStatic.getNumofrightstated());
+                            pbHomework.setProgress(classStatic.getHomework());
+                            txtStated.setText(classStatic.getNumstated() + " lần ");
+                            txtStar.setText(classStatic.getStar() + " sao");
+                            txtRightStated.setText(classStatic.getNumofrightstated() + " lần");
+                            txtHomework.setText(classStatic.getHomework() + " lần");
+                            generateDefaultData(staticArrayList);
+                        }
                     }
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
 
                     }
+
                 });
             }
 
@@ -185,34 +197,39 @@ public class StudentResultFragment extends Fragment{
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
-    private void generateDefaultData() {
+    private void generateDefaultData(final ArrayList<ClassStatic> classStatic) {
         int numSubcolumns = 1;
         int numColumns = 12;
         // Column can have many subcolumns, here by default I use 1 subcolumn in each of 8 columns.
         List<Column> columns = new ArrayList<Column>();
         List<SubcolumnValue> values;
-        for (int i = 0; i < numColumns; ++i) {
-
+        values = new ArrayList<SubcolumnValue>();
+        Column column = new Column(values);
+        column.setHasLabels(true);
+        column.setHasLabelsOnlyForSelected(false);
+        columns.add(column);
+        float value = 0f;
+        for (int i = 1; i <= numColumns; i++) {
             values = new ArrayList<SubcolumnValue>();
-            for (int j = 0; j < numSubcolumns; ++j) {
-                values.add(new SubcolumnValue((float) Math.random() * 50f + 5, ChartUtils.pickColor()));
+            try {
+                value = classStatic.get(i-1).getStar();
             }
+            catch (Exception e ){
+                value = 0f;
+            }
+            values.add(new SubcolumnValue(value, ChartUtils.pickColor()));
 
-            Column column = new Column(values);
+             column = new Column(values);
             column.setHasLabels(true);
             column.setHasLabelsOnlyForSelected(false);
             columns.add(column);
         }
 
         chartData = new ColumnChartData(columns);
-
-
             Axis axisX = new Axis();
             Axis axisY = new Axis().setHasLines(true);
-
                 axisX.setName("Tuần");
                 axisY.setName("Số sao");
-
             chartData.setAxisXBottom(axisX);
             chartData.setAxisYLeft(axisY);
 
@@ -222,5 +239,27 @@ public class StudentResultFragment extends Fragment{
 
         chartView.setColumnChartData(chartData);
         chartView.setZoomEnabled(false);
+        chartView.setOnValueTouchListener(new ColumnChartOnValueSelectListener() {
+            @Override
+            public void onValueSelected(int columnIndex, int subcolumnIndex, SubcolumnValue value) {
+                if(value.getValue()>0){
+                    ClassStatic Static = classStatic.get(columnIndex-1);
+                    txtWeek.setText("Tổng kết tuần "+Static.getWeeks());
+                    pbStated.setProgress(Static.getNumstated());
+                    pbStar.setProgress(Static.getStar());
+                    pbRightStated.setProgress(Static.getNumofrightstated());
+                    pbHomework.setProgress(Static.getHomework());
+                    txtStated.setText(Static.getNumstated() + " lần ");
+                    txtStar.setText(Static.getStar() + " sao");
+                    txtRightStated.setText(Static.getNumofrightstated() + " lần");
+                    txtHomework.setText(Static.getHomework() + " lần");
+                }
+            }
+
+            @Override
+            public void onValueDeselected() {
+
+            }
+        });
     }
 }

@@ -63,7 +63,7 @@
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:hint="@string/user_code"
-                        android:id="@+id/acti_login_edittext_username"/>
+                        android:id="@+id/acti_login_edittext_usercode"/>
 
                     <Button
                         android:id="@+id/acti_login_button_login"

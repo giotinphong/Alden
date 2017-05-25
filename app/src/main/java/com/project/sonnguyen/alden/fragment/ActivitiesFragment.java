@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ListView;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.database.DataSnapshot;
@@ -19,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.project.sonnguyen.alden.ListImageAdapter;
 import com.project.sonnguyen.alden.R;
 import com.project.sonnguyen.alden.data.Activites;
 
@@ -84,12 +86,26 @@ public class ActivitiesFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v =  inflater.inflate(R.layout.fragment_activities, container, false);
-        final ImageView imgTest = (ImageView)v.findViewById(R.id.frag_activities_img_test);
-        final ArrayList<Activites> activitesArrayList = new ArrayList<>();
-        Glide.with(getContext())
-                .load("http://i.imgur.com/N3y2zTG.jpg")
-                .into(imgTest);
+        ListView listImg = (ListView)v.findViewById(R.id.frag_activities_list_image);
+         final ArrayList<Activites> activitesArrayList = new ArrayList<>();
+        final ListImageAdapter listImageAdapter = new ListImageAdapter(getContext(),R.layout.item_frag_activities_image,activitesArrayList);
+        listImg.setAdapter(listImageAdapter);
+        DatabaseReference mRef = FirebaseDatabase.getInstance().getReference();
+        mRef.child("Image").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot child : dataSnapshot.getChildren()){
+                    Activites activites = child.getValue(Activites.class);
+                    activitesArrayList.add(activites);
+                    listImageAdapter.notifyDataSetChanged();
+                }
+            }
 
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
         return v ;
     }
 

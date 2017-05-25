@@ -21,6 +21,8 @@ import com.project.sonnguyen.alden.data.StudentInformation;
 
 import org.w3c.dom.Text;
 
+import static com.project.sonnguyen.alden.LoginActivity.code;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -95,7 +97,7 @@ public class StudentInforFragment extends Fragment {
         DatabaseReference mRef = FirebaseDatabase.getInstance().getReference();
         //get student information
          studentInformation = new StudentInformation();
-        mRef.child("StudentInformation").child("0001").addValueEventListener(new ValueEventListener() {
+        mRef.child("StudentInformation").child(code).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 studentInformation = dataSnapshot.getValue(StudentInformation.class);
