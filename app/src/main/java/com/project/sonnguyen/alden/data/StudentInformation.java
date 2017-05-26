@@ -14,6 +14,15 @@ public class StudentInformation {
     private String Teachernumber;
     private int Numofclass;
     private String Studentcode;
+    private String Avatarurl;
+
+    public String getAvatarurl() {
+        return Avatarurl;
+    }
+
+    public void setAvatarurl(String avatarurl) {
+        Avatarurl = avatarurl;
+    }
 
     public String getStudentcode() {
         return Studentcode;

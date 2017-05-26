@@ -1,11 +1,9 @@
 package com.project.sonnguyen.alden.fragment;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,22 +22,15 @@ import com.project.sonnguyen.alden.data.StudentInformation;
 import java.util.ArrayList;
 import java.util.List;
 
-import ernestoyaquello.com.verticalstepperform.VerticalStepperFormLayout;
-import ernestoyaquello.com.verticalstepperform.interfaces.VerticalStepperForm;
 import lecho.lib.hellocharts.listener.ColumnChartOnValueSelectListener;
 import lecho.lib.hellocharts.model.Axis;
 import lecho.lib.hellocharts.model.Column;
 import lecho.lib.hellocharts.model.ColumnChartData;
-import lecho.lib.hellocharts.model.Line;
-import lecho.lib.hellocharts.model.LineChartData;
-import lecho.lib.hellocharts.model.PointValue;
 import lecho.lib.hellocharts.model.SubcolumnValue;
 import lecho.lib.hellocharts.util.ChartUtils;
 import lecho.lib.hellocharts.view.ColumnChartView;
-import lecho.lib.hellocharts.view.LineChartView;
 
-import static android.R.attr.data;
-import static com.project.sonnguyen.alden.LoginActivity.code;
+import static com.project.sonnguyen.alden.activity.LoginActivity.code;
 
 
 /**
@@ -65,6 +56,7 @@ public class StudentResultFragment extends Fragment{
     private String ClassName;
     private ColumnChartView chartView;
     private ColumnChartData chartData;
+    private ArrayList<ClassStatic> staticArrayList;
 
     public StudentResultFragment() {
         // Required empty public constructor
@@ -114,11 +106,10 @@ public class StudentResultFragment extends Fragment{
          chartView = (ColumnChartView)v.findViewById(R.id.chart);
          chartData = new ColumnChartData();
         //generateDefaultData();
-        final ArrayList<Integer> classStaticArrayList = new ArrayList<>();
+        final ArrayList<Integer> WeekString = new ArrayList<>();
         for(int i = 1;i<=12;i++)
-            classStaticArrayList.add(i);
-
-        final ArrayList<ClassStatic> staticArrayList = new ArrayList<>();
+            WeekString.add(i);
+         staticArrayList = new ArrayList<>();
         final DatabaseReference mRef = FirebaseDatabase.getInstance().getReference();
          ClassName = "";
         mRef.child("StudentInformation").child(code).addValueEventListener(new ValueEventListener() {
@@ -126,23 +117,15 @@ public class StudentResultFragment extends Fragment{
             public void onDataChange(DataSnapshot dataSnapshot) {
                 StudentInformation studentInformation = dataSnapshot.getValue(StudentInformation.class);
                 ClassName = studentInformation.getClassname();
-                for(final int classWeek : classStaticArrayList)
-                mRef.child("Class").child(ClassName).child("Tuan"+classWeek).child(code).addValueEventListener(new ValueEventListener() {
+                for(final int week : WeekString)
+                mRef.child("Class").child(ClassName).child("Tuan"+week).child(code).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         ClassStatic classStatic = dataSnapshot.getValue(ClassStatic.class);
                         //classStatic.setStudentcode(code);
                         if(classStatic!=null) {
-                            classStatic.setWeeks(classWeek);
+                            classStatic.setWeeks(week);
                             staticArrayList.add(classStatic);
-                            pbStated.setProgress(classStatic.getNumstated());
-                            pbStar.setProgress(classStatic.getStar());
-                            pbRightStated.setProgress(classStatic.getNumofrightstated());
-                            pbHomework.setProgress(classStatic.getHomework());
-                            txtStated.setText(classStatic.getNumstated() + " lần ");
-                            txtStar.setText(classStatic.getStar() + " sao");
-                            txtRightStated.setText(classStatic.getNumofrightstated() + " lần");
-                            txtHomework.setText(classStatic.getHomework() + " lần");
                             generateDefaultData(staticArrayList);
                         }
                     }

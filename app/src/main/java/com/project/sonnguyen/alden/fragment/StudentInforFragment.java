@@ -1,9 +1,13 @@
 package com.project.sonnguyen.alden.fragment;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -19,9 +24,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.project.sonnguyen.alden.R;
 import com.project.sonnguyen.alden.data.StudentInformation;
 
-import org.w3c.dom.Text;
-
-import static com.project.sonnguyen.alden.LoginActivity.code;
+import static com.project.sonnguyen.alden.activity.LoginActivity.code;
 
 
 /**
@@ -37,7 +40,7 @@ public class StudentInforFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    private TextView txtName,txtBithday,txtClassName,txtTeacherName,txtParentName,txtParentNumber,txtNumOfClass;
+    private TextView txtName, txtBithday, txtClassName, txtTeacherName, txtParentName, txtParentNumber, txtNumOfClass;
     private FloatingActionButton fabCall;
     private ImageView imgAvatar;
     // TODO: Rename and change types of parameters
@@ -82,21 +85,21 @@ public class StudentInforFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v =  inflater.inflate(R.layout.fragment_student_infor, container, false);
+        View v = inflater.inflate(R.layout.fragment_student_infor, container, false);
         //create component
-        txtBithday = (TextView)v.findViewById(R.id.frag_student_infor_txt_bithday);
-        txtClassName = (TextView)v.findViewById(R.id.frag_student_infor_txt_classname);
-        txtName = (TextView)v.findViewById(R.id.frag_student_infor_txt_studentname);
-        txtNumOfClass = (TextView)v.findViewById(R.id.frag_student_infor_txt_num_of_class);
-        txtParentName = (TextView)v.findViewById(R.id.frag_student_infor_txt_parentname);
-        txtParentNumber = (TextView)v.findViewById(R.id.frag_student_infor_txt_parentnumber);
+        txtBithday = (TextView) v.findViewById(R.id.frag_student_infor_txt_bithday);
+        txtClassName = (TextView) v.findViewById(R.id.frag_student_infor_txt_classname);
+        txtName = (TextView) v.findViewById(R.id.frag_student_infor_txt_studentname);
+        txtNumOfClass = (TextView) v.findViewById(R.id.frag_student_infor_txt_num_of_class);
+        txtParentName = (TextView) v.findViewById(R.id.frag_student_infor_txt_parentname);
+        txtParentNumber = (TextView) v.findViewById(R.id.frag_student_infor_txt_parentnumber);
         txtTeacherName = (TextView) v.findViewById(R.id.frag_student_infor_txt_teachername);
-        fabCall = (FloatingActionButton)v.findViewById(R.id.frag_student_infor_fab_call);
-        imgAvatar = (ImageView)v.findViewById(R.id.frag_student_infor_img_avatar);
+        fabCall = (FloatingActionButton) v.findViewById(R.id.frag_student_infor_fab_call);
+        imgAvatar = (ImageView) v.findViewById(R.id.frag_student_infor_img_avatar);
         //get data
         DatabaseReference mRef = FirebaseDatabase.getInstance().getReference();
         //get student information
-         studentInformation = new StudentInformation();
+        studentInformation = new StudentInformation();
         mRef.child("StudentInformation").child(code).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -105,15 +108,34 @@ public class StudentInforFragment extends Fragment {
                 txtTeacherName.setText(studentInformation.getTeacher());
                 txtParentNumber.setText(studentInformation.getParentnumber());
                 txtParentName.setText(studentInformation.getParentname());
-                txtNumOfClass.setText(""+studentInformation.getNumofclass());
+                txtNumOfClass.setText("" + studentInformation.getNumofclass());
                 txtBithday.setText(studentInformation.getBithday());
                 txtName.setText(studentInformation.getName());
                 txtClassName.setText(studentInformation.getClassname());
+                Glide.with(getContext()).load(studentInformation.getAvatarurl()).into(imgAvatar);
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
+            }
+        });
+        fabCall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_CALL);
+                intent.setData(Uri.parse("tel:" + studentInformation.getTeachernumber()));
+                if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                    // TODO: Consider calling
+                    //    ActivityCompat#requestPermissions
+                    // here to request the missing permissions, and then overriding
+                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                    //                                          int[] grantResults)
+                    // to handle the case where the user grants the permission. See the documentation
+                    // for ActivityCompat#requestPermissions for more details.
+                    return;
+                }
+                getContext().startActivity(intent);
             }
         });
         return v;
@@ -124,6 +146,7 @@ public class StudentInforFragment extends Fragment {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
         }
+
     }
 
     @Override

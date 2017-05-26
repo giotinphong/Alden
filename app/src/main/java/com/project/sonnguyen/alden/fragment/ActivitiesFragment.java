@@ -49,6 +49,7 @@ public class ActivitiesFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    private ArrayList<Activites> activitesArrayList;
 
     public ActivitiesFragment() {
         // Required empty public constructor
@@ -87,17 +88,20 @@ public class ActivitiesFragment extends Fragment {
         // Inflate the layout for this fragment
         View v =  inflater.inflate(R.layout.fragment_activities, container, false);
         ListView listImg = (ListView)v.findViewById(R.id.frag_activities_list_image);
-         final ArrayList<Activites> activitesArrayList = new ArrayList<>();
+        activitesArrayList = new ArrayList<>();
         final ListImageAdapter listImageAdapter = new ListImageAdapter(getContext(),R.layout.item_frag_activities_image,activitesArrayList);
         listImg.setAdapter(listImageAdapter);
+        //TODO: co the loi o day
         DatabaseReference mRef = FirebaseDatabase.getInstance().getReference();
         mRef.child("Image").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot child : dataSnapshot.getChildren()){
                     Activites activites = child.getValue(Activites.class);
-                    activitesArrayList.add(activites);
-                    listImageAdapter.notifyDataSetChanged();
+                    if(activites!=null) {
+                        activitesArrayList.add(activites);
+                        listImageAdapter.notifyDataSetChanged();
+                    }
                 }
             }
 

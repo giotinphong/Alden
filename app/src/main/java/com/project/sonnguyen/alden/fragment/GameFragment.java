@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.project.sonnguyen.alden.R;
-import com.project.sonnguyen.alden.RightOrRonActivity;
+import com.project.sonnguyen.alden.activity.RightOrRonActivity;
 
 
 /**
